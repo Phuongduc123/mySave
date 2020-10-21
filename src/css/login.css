@@ -1,0 +1,15 @@
+.login {
+    background-color: white;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    position: fixed;
+    top: 30%;
+    border: 1px;
+    border-color: #1b1c1d;
+    border-style: solid;
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+  

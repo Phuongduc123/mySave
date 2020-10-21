@@ -1,0 +1,47 @@
+.nav-bar {
+  position: relative;;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #00B5AD;
+}
+
+.left-item {
+  float: left;
+  justify-content: center;
+  align-items: center;
+}
+.left-item a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.left-item div{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+}
+
+.left-item a:hover {
+  background-color: grey;
+}
+
+.right-item a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: right;
+}
+
+.right-item a:hover {
+    background-color: grey;
+}
+
