@@ -1,15 +1,22 @@
-.login {
+.logup {
     background-color: white;
     width: 30%;
     margin-left: 35%;
     margin-right: 35%;
     position: fixed;
-    top: 30%;
+    top: 20%;
     border: 1px;
     border-color: #D3D3D3;
     border-style: solid;
     padding: 1%;
     padding-left: 2%;
     padding-right: 2%;
+}
+Link{
+    color:#00B5AD;
+    cursor: pointer;
+}
+p{
+    color: black;
 }
   

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UserScreen from "./components/UserScreen";
 import { Affix } from "antd";
 import Searchs from "./components/Searchs";
+import Logup from "./components/Logup";
 
 const App = (props) => {
   return (
@@ -38,7 +39,7 @@ const App = (props) => {
               <Link to="/login">Log in</Link>
             </li>
             <li className="right-item">
-              <a>Log up</a>
+            <Link to="/logup">Log up</Link>
             </li>
           </ul>
         </Affix>
@@ -49,6 +50,9 @@ const App = (props) => {
           </Route>
           <Route exact path="/user-screen">
             <UserScreen />
+          </Route>
+          <Route>
+            <Logup/>
           </Route>
         </Switch>
       </Router>

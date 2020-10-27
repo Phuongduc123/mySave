@@ -12,7 +12,7 @@ const File = (props) => {
   return (
     <>
       <Card
-        style={{ width: 200,margin:20 }}
+        style={{ width: 190,margin:20 }}
         cover={
           <img
             alt="example"
