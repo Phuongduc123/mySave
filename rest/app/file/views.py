@@ -12,7 +12,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 class UserFileList(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
-
+ 
     def get(self, request, format=None):
         """
         request method is GET

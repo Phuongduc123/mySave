@@ -1,18 +1,45 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import "../css/login.css"
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { postConfirmSignin } from "../request/postRequest";
+import { useState } from "react";
+import actions from "../redux/actions/signin/index";
+import {connect} from "react-redux"
+import { Redirect } from "react-router-dom";
+import { FormInstance } from 'antd/lib/form';
+
+// let cfLogged=false
 
 const Login = (props) => {
+  const formRef=useRef(<FormInstance/>)
+
+  const [email, setEmail] = useState("");
+  const [password, setPasword] = useState("");
+
+
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
+  // handle sign in
+  const handleSignin = async ()=>{
+    formRef.current.resetFields();
+    await postConfirmSignin(email,password,props.actionLogged);
+  }
+  
+  // when logged dispatch action confirm logged in redux and redirect to user screen
+  if (props.logged===true){
+    return <Redirect to="/user-screen"/>
+  }
+
   return (
     <div className="login">
       <div
         className="form"
       >
         <Form
+          ref={formRef}
           name="normal_login"
           initialValues={{ remember: true }}
           onFinish={onFinish}
@@ -31,12 +58,15 @@ const Login = (props) => {
           </div>
 
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your Username!" }]}
+            name="email"
+            rules={[{ required: true, message: "Please input your Email!" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Email"
+              onChange={(value) => {
+                setEmail(value.target.value);
+              }}
             />
           </Form.Item>
           <Form.Item
@@ -47,6 +77,9 @@ const Login = (props) => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
+              onChange={(value) => {
+                setPasword(value.target.value);
+              }}
             />
           </Form.Item>
           <Form.Item>
@@ -65,8 +98,9 @@ const Login = (props) => {
                 borderStyle: "hidden",
                 width: "100%",
               }}
+              onClick={()=>{handleSignin();}}
             >
-              Log in
+              Sign in
             </Button>
           </Form.Item>
         </Form>
@@ -74,4 +108,20 @@ const Login = (props) => {
     </div>
   );
 };
-export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    logged:state.signin.logged,
+    token: state.signin.token
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actionLogged: (token) => {
+      dispatch(actions.actionLogged(token));
+    },
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

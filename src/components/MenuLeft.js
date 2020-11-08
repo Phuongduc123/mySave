@@ -10,8 +10,9 @@ import {
 
 const { SubMenu } = Menu;
 const propsss = {
-  async onChange({ file, fileList }) {
-    console.log(file);
+  action:'http://127.0.0.1:8000/api/userfile/',
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem("token")}` ,
   },
 };
 

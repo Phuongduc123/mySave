@@ -10,9 +10,10 @@ const { Meta } = Card;
 
 const File = (props) => {
   return (
-    <>
+    <div>
       <Card
-        style={{ width: 190,margin:20 }}
+        style={{ width: 190,margin:20,cursor:"pointer" }}
+        onClick={()=>window.open(`http://127.0.0.1:8000${props.link}`,"_blank")}
         cover={
           <img
             alt="example"
@@ -29,11 +30,11 @@ const File = (props) => {
           avatar={
             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           }
-          title="Card title"
+          title={props.name}
         />
       </Card>
       
-    </>
+    </div>
   );
 };
 

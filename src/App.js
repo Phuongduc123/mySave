@@ -1,13 +1,22 @@
 import React from "react";
 import "./css/App.css";
 import Login from "./components/Login";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import UserScreen from "./components/UserScreen";
-import { Affix } from "antd";
+import { Affix, Avatar, Popover } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import Searchs from "./components/Searchs";
 import Logup from "./components/Logup";
+import { connect } from "react-redux";
+import actions from "./redux/actions/signin/index";
 
 const App = (props) => {
+  //send action to redux to signout 
+  const Signout=()=>{
+    props.actionLogged("");
+  }
+
+  
   return (
     <>
       <Router>
@@ -35,24 +44,43 @@ const App = (props) => {
                 <Searchs />
               </div>
             </li>
+            {/* logout and view profile  */}
+            {JSON.parse(localStorage.getItem("logged")) === true ? (
+              <li className="right-item">
+                <Link>
+                <Popover content={(
+                  <div className="popoverUser">
+                  <Link ><p className="itemPopover">Profile</p></Link>
+                  <Link to="/signin"><p className="itemPopover" onClick={Signout}>Sign out</p></Link>
+                  </div>
+                )} >
+                  <Avatar size={30} icon={<UserOutlined />} />
+                </Popover>
+                </Link>
+                
+              </li>
+            ) : (
+              <></>
+            )}
+
             <li className="right-item">
-              <Link to="/login">Log in</Link>
+              <Link to="/signin">Sign in</Link>
             </li>
             <li className="right-item">
-            <Link to="/logup">Log up</Link>
+              <Link to="/signup">Sign up</Link>
             </li>
           </ul>
         </Affix>
 
         <Switch>
-          <Route exact path="/login">
+          <Route exact path="/signin">
             <Login />
           </Route>
           <Route exact path="/user-screen">
             <UserScreen />
           </Route>
-          <Route>
-            <Logup/>
+          <Route exact path="/signup">
+            <Logup />
           </Route>
         </Switch>
       </Router>
@@ -60,4 +88,18 @@ const App = (props) => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    logged: state.signin.logged,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actionLogged: (token) => {
+      dispatch(actions.actionLogged(token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

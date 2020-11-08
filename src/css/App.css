@@ -45,3 +45,15 @@
     background-color: grey;
 }
 
+.popoverUser{
+  flex-direction: column;
+  padding:0px
+}
+.itemPopover{
+  display: block;
+}
+.itemPopover:hover{
+  color:#00B5AD;
+  cursor: pointer;
+}
+
