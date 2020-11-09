@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'rest.app.user',
     'rest.app.profile',
     'rest.app.file',
-    'rest.app.post'
+    'rest.app.post',
+    'rest.app.comment',
 ]
 
 MIDDLEWARE = [
