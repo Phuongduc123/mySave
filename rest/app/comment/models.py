@@ -5,9 +5,9 @@ from rest.app.post.models import Post
 
 # Create your models here.
 class Comment(models.Model):
-    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=200)
 

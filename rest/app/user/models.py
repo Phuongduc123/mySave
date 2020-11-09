@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    _id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True)
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -53,6 +53,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def get_user_profile(self):
+        return self.profile
+
+    def get_all_user_files(self):
+        return self.files.all()
+
+    def get_all_user_posts(self):
+        return self.posts.all()
+
+    def get_files_that_user_publish(self):
+        return self.files.filter(published=True)
+
+    def get_all_user_comments(self):
+        return self.comments.all()
+
+    def get_posts_that_user_comment(self):
+        comments = self.comments.select_related('post').all()
+        posts = []
+        for comment in comments:
+            posts.append(comment.post)
+        return posts;
 
     class Meta:
         '''
