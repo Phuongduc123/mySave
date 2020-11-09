@@ -6,6 +6,7 @@ import File from "./File";
 import { connect } from "react-redux";
 import actions from "../redux/actions/file/index";
 import { useEffect } from "react";
+import "../css/userScreen.css";
 
 const UserScreen = (props) => {
   // get file to redux
@@ -13,21 +14,21 @@ const UserScreen = (props) => {
   // const [rowContent,setRowContent]= useState([])
   useEffect(() => {
     props.getFile();
-    setFileRow(Math.ceil(props.files.length / 4)+2);
-  }, [props.files.length]);
+    setFileRow(Math.ceil(props.files?.length / 4)+2);
+  }, [props.files?.length]);
 
   // function to render files
   const renderFiles = () => {
     let rows=[]
     for (var i = 0; i < fileRow; i++) {
       rows.push(
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {props.files.map((file, index) => {
+        <div key={i} style={{ display: "flex"}}>
+          {props.files?.map((file, index) => {
+            console.log(file);
             if (index - i * 4 < 4 && index - i * 4 >= 0) {
-              console.log(file);
               return (
                 <div key={index}>
-                  <File name={file.name} link={file.file}/>
+                  <File name={file.name} link={file.file} idFile={file._id}/>
                 </div>
               );
             }
@@ -40,17 +41,17 @@ const UserScreen = (props) => {
     })
   };
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex",flexDirection:"row" }}>
       {console.log(fileRow)}
-      <div style={{ flex: 1 }}>
+      <div className="menu-left" >
         <MenuLeft />
       </div>
 
       <div style={{ flex: 6, display: "block" }}>
         {/* renderFiles */}
-        {renderFiles()}
+        {JSON.parse(localStorage.getItem("logged")) === true ?renderFiles():<></>}
       </div>
-      <div style={{ flex: 1 }}>
+      <div className="menu-right" >
         <MenuRight />
       </div>
     </div>
@@ -59,6 +60,7 @@ const UserScreen = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    logged:state.signin.logged,
     files: state.file.file,
   };
 };

@@ -12,7 +12,7 @@ import { FormInstance } from 'antd/lib/form';
 // let cfLogged=false
 
 const Login = (props) => {
-  const formRef=useRef(<FormInstance/>)
+  const formRef=useRef()
 
   const [email, setEmail] = useState("");
   const [password, setPasword] = useState("");

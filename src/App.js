@@ -16,7 +16,6 @@ const App = (props) => {
     props.actionLogged("");
   }
 
-  
   return (
     <>
       <Router>
@@ -37,7 +36,7 @@ const App = (props) => {
               <Link to="/user-screen">my Home</Link>
             </li>
             <li className="left-item">
-              <a>my History</a>
+              <Link to="/my-community">my Community</Link>
             </li>
             <li className="left-item">
               <div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../css/login.css";
 import { Affix, Button, Menu, Switch, Upload } from "antd";
+import {connect} from "react-redux"
+import actions from "../redux/actions/file/index";
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -9,16 +11,25 @@ import {
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
-const propsss = {
-  action:'http://127.0.0.1:8000/api/userfile/',
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem("token")}` ,
-  },
-};
+
 
 const MenuLeft = (props) => {
+  //state
   const [theme, setTheme] = useState("light");
   const [current, setCurrent] = useState("1");
+
+  const propsss = {
+    action:'http://127.0.0.1:8000/api/userfile/',
+    onChange({ file}) {
+      if (file.status !== 'uploading') {
+        props.getFile([])
+      }
+    },
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+    },
+  };
+
   var handleClick = (e) => {
     setCurrent(e.key);
   };
@@ -74,4 +85,17 @@ const MenuLeft = (props) => {
     </>
   );
 };
-export default MenuLeft;
+
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFile: (file) => {
+      dispatch(actions.getFile(file));
+    },
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(MenuLeft);
