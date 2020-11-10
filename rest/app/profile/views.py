@@ -50,9 +50,9 @@ class GetProfile(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
 
-    def get(self, request):
+    def post(self, request):
         """
-        request method is GET
+        request method is POST
         request body: {"id":"user-id"}
         return json of profile user with that id
         """
