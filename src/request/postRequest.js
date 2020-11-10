@@ -2,7 +2,6 @@ import actions from "../redux/actions/signin/index";
 import { useDispatch } from "react-redux";
 const axios = require("axios");
 
-
 //post request
 export const postUserProfile = async (email, password, name) => {
   await axios
@@ -21,19 +20,13 @@ export const postUserProfile = async (email, password, name) => {
         },
       }
     )
-    .then((response) => {
-      console.log("response: ", response);
-    })
+    .then((response) => {})
     .catch((error) => {
       console.log("error: ", error);
     });
 };
 
-export const postConfirmSignin = async (
-  email,
-  password,
-  actionLogged,
-) => {
+export const postConfirmSignin = async (email, password, actionLogged) => {
   await axios
     .post(
       "http://127.0.0.1:8000/api/signin",
@@ -48,7 +41,6 @@ export const postConfirmSignin = async (
       }
     )
     .then((response) => {
-      console.log("response: ", response);
       if (response.status == 200) {
         actionLogged(response.data.token);
       }
@@ -58,10 +50,7 @@ export const postConfirmSignin = async (
     });
 };
 
-export const postFileToPage = async (
-  title,
-  file_id
-) => {
+export const postFileToPage = async (title, file_id) => {
   await axios
     .post(
       "http://127.0.0.1:8000/api/postpage/",
@@ -71,61 +60,74 @@ export const postFileToPage = async (
       },
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
-    .then((response) => {
-      console.log("response: ", response);
-    })
+    .then((response) => {})
     .catch((error) => {
       console.log("error: ", error);
     });
 };
 
-export const postComment = async (
-  content,
-  post_id,
-) => {
+export const postComment = async (content, post_id) => {
   await axios
     .post(
       "http://127.0.0.1:8000/api/commentpostlist/",
       {
-        content:content,
-        post:post_id
+        content: content,
+        post: post_id,
       },
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    .then((response) => {})
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+};
+
+export const searchPost = async (searchContent, getFileToRedux) => {
+  await axios
+    .post(
+      "http://127.0.0.1:8000/api/searchpost/",
+      {
+        search: searchContent,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
     .then((response) => {
-      console.log("response: ", response);
+      console.log("respone :", response);
+      if (response.status >= 200 && response.status < 300) {
+        getFileToRedux(response.data.data);
+      }
     })
     .catch((error) => {
       console.log("error: ", error);
     });
 };
 
-
 //getRequest
-export const getUserfile = async (
-  changeAction
-) => {
+export const getUserfile = async (changeAction) => {
   await axios
     .get(
       "http://127.0.0.1:8000/api/userfile",
-      
+
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
     .then((response) => {
-      console.log("response: ", response);
-      if(response.status==200){
+      if (response.status == 200) {
         changeAction(response.data.data);
       }
     })
@@ -134,22 +136,19 @@ export const getUserfile = async (
     });
 };
 
-export const getFileFromPost = async (
-  getFile
-) => {
+export const getFileFromPost = async (getFile) => {
   await axios
     .get(
       "http://127.0.0.1:8000/api/postpage/",
-      
+
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
     .then((response) => {
-      console.log("response: ", response);
-      if(response.status==200){
+      if (response.status == 200) {
         getFile(response.data.news);
       }
     })
@@ -158,34 +157,30 @@ export const getFileFromPost = async (
     });
 };
 
-export const getComment = async (
-  idPost,setFullComment
-) => {
+export const getComment = async (idPost, setFullComment) => {
   await axios
     .post(
-      "http://127.0.0.1:8000/api/commentpostlist/",
+      "http://127.0.0.1:8000/api/getcommentpost/",
       {
-        id:"6914d4b6-b4bd-4a7b-95f4-ba60e8a2edcd"
+        id: idPost,
       },
       {
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
     .then((response) => {
-      console.log("response: ", response);
       // if(response.status>=200 && response<=300){
       //   setCommentContent()
       // }
+      setFullComment(response.data["all post comment here"]);
     })
     .catch((error) => {
       console.log("error: ", error);
     });
-  
 };
-
 
 //delete request
 export const deleteFile = async (
@@ -194,26 +189,20 @@ export const deleteFile = async (
   getFile
 ) => {
   await axios
-    .delete(
-      "http://127.0.0.1:8000/api/userfile",
-      {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}` ,
-        },
-        data:{
-            id:idFile
-        }
+    .delete("http://127.0.0.1:8000/api/userfile", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      
-    )
+      data: {
+        id: idFile,
+      },
+    })
     .then((response) => {
-      console.log("response: ", response)
-      if(response.status>200 && response.status<300){
-        getFile([])
+      if (response.status > 200 && response.status < 300) {
+        getFile([]);
       }
     })
     .catch((error) => {
       console.log("error: ", error);
     });
 };
-

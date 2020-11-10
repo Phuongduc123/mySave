@@ -10,9 +10,11 @@ import { useEffect } from "react";
 const CommunityScreen = (props) => {
   // get file to redux
   const [fileRow, setFileRow] = useState(1);
-  // const [rowContent,setRowContent]= useState([])
-  useEffect(() => {
+
+  useEffect(()=>{
     props.getFileFromPost();
+  },[])
+  useEffect(() => {
     //set amount of rows follow length of fileFromPost
     setFileRow(Math.ceil(props.fileFromPost?.length / 4) + 2);
   }, [props.fileFromPost?.length]);
@@ -53,7 +55,6 @@ const CommunityScreen = (props) => {
 
   return (
     <div style={{ display: "flex" }}>
-      {console.log(fileRow)}
       <div style={{ flex: 1 }}>
         <MenuLeft hideAdd={true} />
       </div>
@@ -77,6 +78,7 @@ const CommunityScreen = (props) => {
 const mapStateToProps = (state) => {
   return {
     fileFromPost: state.file.fileFromPost,
+    searchFile:state.file.searchFile
   };
 };
 

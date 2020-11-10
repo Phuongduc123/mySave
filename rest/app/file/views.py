@@ -59,9 +59,9 @@ class GetFile(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
 
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         """
-        request method is GET
+        request method is POST
         request body: {"id":"file_id"}
         return json filelink that has requested id
         """

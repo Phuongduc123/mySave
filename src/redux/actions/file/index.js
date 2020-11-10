@@ -2,7 +2,8 @@ import {
     GET_FILE,
     GET_FILE_TO_REDUX,
     GET_FILE_FROM_POST_TO_REDUX,
-    GET_FILE_FROM_POST
+    GET_FILE_FROM_POST,
+    GET_SEARCH_FILE
 } from './action_type'
 
 export default {
@@ -35,4 +36,12 @@ export default {
             }
         }
     },
+    getSearchFile:(file)=>{
+        return {
+            type: GET_SEARCH_FILE,
+            params:{
+                file:file
+            }
+        }
+    }
 }
