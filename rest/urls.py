@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/', include('rest.app.profile.urls')),
     path('api/', include('rest.app.file.urls')),
     path('api/', include('rest.app.post.urls')),
+    path('api/', include('rest.app.comment.urls')),
 ]
 
 if settings.DEBUG:

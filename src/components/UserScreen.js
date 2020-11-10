@@ -44,7 +44,7 @@ const UserScreen = (props) => {
     <div style={{ display: "flex",flexDirection:"row" }}>
       {console.log(fileRow)}
       <div className="menu-left" >
-        <MenuLeft />
+        <MenuLeft hideAdd={false}/>
       </div>
 
       <div style={{ flex: 6, display: "block" }}>

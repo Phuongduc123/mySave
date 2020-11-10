@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest.app.file',
     'rest.app.post',
     'corsheaders',
+    'rest.app.comment',
 ]
 
 MIDDLEWARE = [

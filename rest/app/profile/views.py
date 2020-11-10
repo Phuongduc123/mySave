@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest.app.profile.serializers import UserSerializer
 from rest.app.profile.models import UserProfile
-
+from rest.app.user import utils 
 
 class UserProfileView(APIView):
 
@@ -18,14 +18,11 @@ class UserProfileView(APIView):
         request method is GET
         """
         try:
-            user_profile = UserProfile.objects.get(user=request.user)
             status_code = status.HTTP_200_OK
             response = {
                 'success': 'true',
                 'message': 'User profile fetched successfully',
-                'data': {
-                    'name': user_profile.name,
-                    }
+                'data': utils.get_user_who_send_request(request.user)
                 }
 
         except Exception as e:

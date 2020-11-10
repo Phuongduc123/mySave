@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import "../css/login.css";
 import { Affix, Button, Menu, Switch, Upload } from "antd";
-import {connect} from "react-redux"
+import { connect } from "react-redux";
 import actions from "../redux/actions/file/index";
 import {
   MailOutlined,
   AppstoreOutlined,
   SettingOutlined,
-  PlusOutlined
+  PlusOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
-
 
 const MenuLeft = (props) => {
   //state
@@ -19,14 +18,14 @@ const MenuLeft = (props) => {
   const [current, setCurrent] = useState("1");
 
   const propsss = {
-    action:'http://127.0.0.1:8000/api/userfile/',
-    onChange({ file}) {
-      if (file.status !== 'uploading') {
-        props.getFile([])
+    action: "http://127.0.0.1:8000/api/userfile/",
+    onChange({ file }) {
+      if (file.status !== "uploading") {
+        props.getFile([]);
       }
     },
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}` ,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   };
 
@@ -34,61 +33,57 @@ const MenuLeft = (props) => {
     setCurrent(e.key);
   };
 
-  var onFileChange =(e)=>{
+  var onFileChange = (e) => {
     console.log(e.target.files[0]);
-  }
+  };
   return (
     <>
-        <Menu
-          theme={theme}
-          onClick={handleClick}
-          style={{ width: 256, height: "1000px" }}
-          defaultOpenKeys={["sub1"]}
-          selectedKeys={[current]}
-          mode="inline"
-
-        >
-            <Menu.Item>
-              <Upload {...propsss} >
-              <Button title="index" icon={<PlusOutlined/>} style={{marginLeft:"3rem", borderStyle:"solid"}}>ADD</Button>
-              </Upload>
-            </Menu.Item>
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
-            <Menu.Item key="1">Option 1</Menu.Item>
-            <Menu.Item key="2">Option 2</Menu.Item>
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
+      <Menu
+        theme={theme}
+        onClick={handleClick}
+        style={{ width: 256, height: "1000px" }}
+        defaultOpenKeys={["sub1"]}
+        selectedKeys={[current]}
+        mode="inline"
+      >
+        {props.hideAdd===false?<Menu.Item>
+          <Upload {...propsss}>
+            <Button
+              title="index"
+              icon={<PlusOutlined />}
+              style={{ marginLeft: "3rem", borderStyle: "solid" }}
+            >
+              ADD
+            </Button>
+          </Upload>
+        </Menu.Item>:<></>}
+        <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
+          <Menu.Item key="1">Option 1</Menu.Item>
+          <Menu.Item key="2">Option 2</Menu.Item>
+          <Menu.Item key="3">Option 3</Menu.Item>
+          <Menu.Item key="4">Option 4</Menu.Item>
+        </SubMenu>
+        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
+          <Menu.Item key="5">Option 5</Menu.Item>
+          <Menu.Item key="6">Option 6</Menu.Item>
+          <SubMenu key="sub3" title="Submenu">
+            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 8</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="sub2"
-            icon={<AppstoreOutlined />}
-            title="Navigation Two"
-          >
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="7">Option 7</Menu.Item>
-              <Menu.Item key="8">Option 8</Menu.Item>
-            </SubMenu>
-          </SubMenu>
-          <SubMenu
-            key="sub4"
-            icon={<SettingOutlined />}
-            title="Navigation Three"
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
-        </Menu>
+        </SubMenu>
+        <SubMenu key="sub4" icon={<SettingOutlined />} title="Navigation Three">
+          <Menu.Item key="9">Option 9</Menu.Item>
+          <Menu.Item key="10">Option 10</Menu.Item>
+          <Menu.Item key="11">Option 11</Menu.Item>
+          <Menu.Item key="12">Option 12</Menu.Item>
+        </SubMenu>
+      </Menu>
     </>
   );
 };
 
 const mapStateToProps = (state) => {
-  return {
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -98,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(MenuLeft);
+export default connect(mapStateToProps, mapDispatchToProps)(MenuLeft);

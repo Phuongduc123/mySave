@@ -1,0 +1,10 @@
+.popoverUser{
+    flex-direction: column;
+}
+.itemPopover{
+    flex:1
+}
+
+.fileAtribute{
+    color:#00B5AD
+}

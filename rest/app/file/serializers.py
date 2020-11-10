@@ -6,7 +6,7 @@ class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ('file', 'timestamp', 'name', 'user', '_id')
+        fields = ('file', 'timestamp', 'name', 'user', '_id', 'published')
 
     def get_name(self, obj):
         file_name = ''

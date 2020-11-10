@@ -1,0 +1,29 @@
+.menu-left{
+    flex:1;
+}
+
+.menu-right{
+    flex:1;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .menu-left{
+        flex:1
+    }
+    
+    .menu-right{
+        flex:0
+    }
+  
+  }
+@media only screen and (max-width: 500px) {
+.menu-left{
+    flex:0
+}
+
+.menu-right{
+    flex:0
+}
+
+}

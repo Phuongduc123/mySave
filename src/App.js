@@ -1,7 +1,13 @@
 import React from "react";
 import "./css/App.css";
 import Login from "./components/Login";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import UserScreen from "./components/UserScreen";
 import { Affix, Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -9,12 +15,13 @@ import Searchs from "./components/Searchs";
 import Logup from "./components/Logup";
 import { connect } from "react-redux";
 import actions from "./redux/actions/signin/index";
+import CommunityScreen from "./components/CommunityScreen";
 
 const App = (props) => {
-  //send action to redux to signout 
-  const Signout=()=>{
+  //send action to redux to signout
+  const Signout = () => {
     props.actionLogged("");
-  }
+  };
 
   return (
     <>
@@ -47,16 +54,23 @@ const App = (props) => {
             {JSON.parse(localStorage.getItem("logged")) === true ? (
               <li className="right-item">
                 <Link>
-                <Popover content={(
-                  <div className="popoverUser">
-                  <Link ><p className="itemPopover">Profile</p></Link>
-                  <Link to="/signin"><p className="itemPopover" onClick={Signout}>Sign out</p></Link>
-                  </div>
-                )} >
-                  <Avatar size={30} icon={<UserOutlined />} />
-                </Popover>
+                  <Popover
+                    content={
+                      <div className="popoverUser">
+                        <Link>
+                          <p className="itemPopover">Profile</p>
+                        </Link>
+                        <Link to="/signin">
+                          <p className="itemPopover" onClick={Signout}>
+                            Sign out
+                          </p>
+                        </Link>
+                      </div>
+                    }
+                  >
+                    <Avatar size={30} icon={<UserOutlined />} />
+                  </Popover>
                 </Link>
-                
               </li>
             ) : (
               <></>
@@ -77,6 +91,9 @@ const App = (props) => {
           </Route>
           <Route exact path="/user-screen">
             <UserScreen />
+          </Route>
+          <Route exact path="/my-community">
+            <CommunityScreen />
           </Route>
           <Route exact path="/signup">
             <Logup />

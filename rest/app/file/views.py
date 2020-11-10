@@ -4,8 +4,7 @@ from rest_framework import status
 from .serializers import FileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import File
-from rest.app.profile.models import UserProfile 
-from rest.app.user.serializers import UserSerializer
+from rest.app.user import utils 
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
@@ -18,15 +17,14 @@ class UserFileList(APIView):
         request method is GET
         return list of json userfile has link to file
         """
-        files = File.objects.filter(user=request.user)
+        files = request.user.get_all_user_files()
         serializer = FileSerializer(files, many=True)
-        profile = UserProfile.objects.get(user=request.user)
-        profile_serializer = UserSerializer(profile)
+        
         response = {
             'success': 'true',
             'message': 'User file fetched successfully',
             'data': serializer.data,
-            'profile': profile_serializer.data
+            'profile': utils.get_user_who_send_request(request.user),
         }
         return Response(response)
 
@@ -69,12 +67,10 @@ class GetFile(APIView):
         """
         files = File.objects.get(_id=request.data['id'])
         serializer = FileSerializer(files)
-        profile = UserProfile.objects.get(user=request.user)
-        profile_serializer = UserSerializer(profile)
         response = {
             'success': 'true',
             'message': 'file fetched successfully',
             'data': serializer.data,
-            'who wants to get file': profile_serializer.data
+            'who wants to get file': utils.get_user_who_send_request(request.user),
         }
         return Response(response)
