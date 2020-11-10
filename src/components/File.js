@@ -7,12 +7,14 @@ import {
   FolderOpenTwoTone,
   UploadOutlined,
   CommentOutlined,
+  DownloadOutlined
 } from "@ant-design/icons";
 import {
   deleteFile,
   postFileToPage,
   postComment,
   getComment,
+  getDownloadFile
 } from "../request/postRequest";
 import { connect } from "react-redux";
 import actions from "../redux/actions/file/index";
@@ -55,6 +57,10 @@ const File = (props) => {
   const commentPost = () => {
     setVisibleModal(true);
   };
+  //download file
+  const downloadFile = () =>{
+    getDownloadFile(props.link,props.name)
+  }
 
   //handle modal
   const handleOk = async (e) => {
@@ -133,7 +139,9 @@ const File = (props) => {
                   }
                 >
                   <CommentOutlined key="postFileToPage" onClick={commentPost} />
+                  
                 </Popover>,
+                <DownloadOutlined key="downloadFile" onClick={downloadFile}/> 
               ]
             : [
                 <FolderOpenTwoTone
@@ -144,6 +152,7 @@ const File = (props) => {
                 />,
                 <UploadOutlined key="postFileToPage" onClick={postFilePage} />,
                 <DeleteOutlined key="deleteFile" onClick={delFile} />,
+                <DownloadOutlined key="downloadFile" onClick={downloadFile}/> 
               ]
         }
       >

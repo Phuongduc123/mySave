@@ -1,6 +1,5 @@
-import actions from "../redux/actions/signin/index";
-import { useDispatch } from "react-redux";
 const axios = require("axios");
+const FileDownload = require('js-file-download');
 
 //post request
 export const postUserProfile = async (email, password, name) => {
@@ -172,15 +171,34 @@ export const getComment = async (idPost, setFullComment) => {
       }
     )
     .then((response) => {
-      // if(response.status>=200 && response<=300){
-      //   setCommentContent()
-      // }
-      setFullComment(response.data["all post comment here"]);
+      if(response.status>=200 && response<=300){
+        setFullComment(response.data["all post comment here"]);
+      }
+      
     })
     .catch((error) => {
       console.log("error: ", error);
     });
 };
+
+export const getDownloadFile = async (url,name) => {
+  await axios
+    .get(
+      `http://127.0.0.1:8000${url}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    .then((response) => {
+      FileDownload(response.data, `${name}`)
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+};
+
 
 //delete request
 export const deleteFile = async (
