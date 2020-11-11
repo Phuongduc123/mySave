@@ -10,6 +10,7 @@ from .serializers import PostSerializer
 from rest.app.file.models import File 
 
 
+
 class PostPageList(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
