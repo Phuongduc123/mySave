@@ -76,6 +76,13 @@ class User(AbstractBaseUser, PermissionsMixin):
             posts.append(comment.post)
         return posts;
 
+    def unoptimized_get_posts_that_user_comment(self):
+        comments = self.comments.all()
+        posts = []
+        for comment in comments:
+            posts.append(comment.post)
+        return posts;
+
     class Meta:
         '''
         to set table name in database
