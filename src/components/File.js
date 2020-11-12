@@ -55,6 +55,7 @@ const File = (props) => {
   };
   //comment post
   const commentPost = () => {
+    console.log(fullComment)
     setVisibleModal(true);
   };
   //download file

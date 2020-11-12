@@ -171,7 +171,9 @@ export const getComment = async (idPost, setFullComment) => {
       }
     )
     .then((response) => {
-      if(response.status>=200 && response<=300){
+      console.log(response)
+      if(response.status===200){
+        
         setFullComment(response.data["all post comment here"]);
       }
       
