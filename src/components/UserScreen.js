@@ -24,7 +24,6 @@ const UserScreen = (props) => {
       rows.push(
         <div key={i} style={{ display: "flex"}}>
           {props.files?.map((file, index) => {
-            console.log(file);
             if (index - i * 4 < 4 && index - i * 4 >= 0) {
               return (
                 <div key={index}>
@@ -42,7 +41,6 @@ const UserScreen = (props) => {
   };
   return (
     <div style={{ display: "flex",flexDirection:"row" }}>
-      {console.log(fileRow)}
       <div className="menu-left" >
         <MenuLeft hideAdd={false}/>
       </div>

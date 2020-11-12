@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./css/App.css";
 import Login from "./components/Login";
 import {
@@ -16,12 +16,18 @@ import Logup from "./components/Logup";
 import { connect } from "react-redux";
 import actions from "./redux/actions/signin/index";
 import CommunityScreen from "./components/CommunityScreen";
+import { getProfile } from "./request/postRequest";
 
 const App = (props) => {
+  const [userName, setUserName] = useState("name");
   //send action to redux to signout
   const Signout = () => {
     props.actionLogged("");
   };
+
+  useEffect(() => {
+    getProfile(setUserName);
+  }, [userName]);
 
   return (
     <>
@@ -58,7 +64,7 @@ const App = (props) => {
                     content={
                       <div className="popoverUser">
                         <Link>
-                          <p className="itemPopover">Profile</p>
+                          <p className="itemPopover">{userName}</p>
                         </Link>
                         <Link to="/signin">
                           <p className="itemPopover" onClick={Signout}>

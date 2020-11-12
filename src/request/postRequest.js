@@ -183,6 +183,29 @@ export const getComment = async (idPost, setFullComment) => {
     });
 };
 
+export const getProfile = async (setUserName) => {
+  await axios
+    .get(
+      "http://127.0.0.1:8000/api/profile/",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response)
+      if(response.status===200){
+        setUserName(response.data.data.name)
+      }
+      
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+};
+
 export const getDownloadFile = async (url,name) => {
   await axios
     .get(
