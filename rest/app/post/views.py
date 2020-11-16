@@ -10,6 +10,7 @@ from .serializers import PostSerializer
 from rest.app.file.models import File 
 
 
+
 class PostPageList(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
@@ -20,7 +21,7 @@ class PostPageList(APIView):
         return list of json all posts and each post has file id
         """
         result = []
-        posts = Post.objects.select_related('file', 'user')[:100]
+        posts = Post.objects.select_related('file', 'user')
         for post in posts:
             result.append(postUtils.custom_serializing_post(post))
         response = {
@@ -83,7 +84,7 @@ class UserPostList(APIView):
         }
         return Response(response)
 
-class SearchPostList(APIView):
+class SearchPostListByTitle(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
 
@@ -94,6 +95,30 @@ class SearchPostList(APIView):
         return json post that a user has shared
         """
         posts = Post.objects.filter(title__contains=request.data['search'])
+        result = []
+        for post in posts:
+            result.append(postUtils.custom_serializing_post(post))
+        response = {
+            'success': 'true',
+            'message': 'Post Page Search is here',
+            'data': result,
+            'who is searching heh?': userUtils.get_user_who_send_request(request.user)
+        }
+        return Response(response)
+
+class SearchPostListByUser(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+
+    def post(self, request, format=None):
+        """
+        request method is POST
+        request body: {"search":"search string"}
+        return json post that a user has shared
+        """
+        from rest.app.profile.models import UserProfile
+        users = UserProfile.objects.filter(name__contains=request.data['search'])
+        posts = Post.objects.filter(user__profile__in=users)
         result = []
         for post in posts:
             result.append(postUtils.custom_serializing_post(post))
