@@ -41,6 +41,7 @@ const File = (props) => {
   }, [props.name]);
 
   useEffect(() => {
+    if(props.community===true)
     getComment(props.idPost, setFullComment);
   }, [props.idPost]);
 

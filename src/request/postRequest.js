@@ -194,10 +194,10 @@ export const getProfile = async (setUserName) => {
         },
       }
     )
-    .then((response) => {
+    .then(async (response) => {
       console.log(response)
       if(response.status===200){
-        setUserName(response.data.data.name)
+        await setUserName(response.data.data.name)
       }
       
     })
