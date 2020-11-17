@@ -26,8 +26,8 @@ const App = (props) => {
   };
 
   useEffect(() => {
-    getProfile(setUserName);
-  });
+    getProfile(setUserName);  
+  },[]);
 
   return (
     <>
