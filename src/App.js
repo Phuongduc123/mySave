@@ -27,7 +27,7 @@ const App = (props) => {
 
   useEffect(() => {
     getProfile(setUserName);  
-  },[]);
+  });
 
   return (
     <>
