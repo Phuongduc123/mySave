@@ -129,3 +129,27 @@ class SearchPostListByUser(APIView):
             'who is searching heh?': userUtils.get_user_who_send_request(request.user)
         }
         return Response(response)
+
+class GetPostListByPart(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+
+    def post(self, request, format=None):
+        """
+        request method is POST
+        request body: {"start":"number", "amounts":"number"}
+        return json post that a user has shared
+        """
+        result = []
+        start = int(request.data['start'])
+        end = int(request.data['start']) + int(request.data['number'])
+        posts = Post.objects.select_related('file', 'user')[start:end]
+        for post in posts:
+            result.append(postUtils.custom_serializing_post(post))
+        response = {
+            'success': 'true',
+            'message': 'Post Page is here',
+            'news': result,
+            'who is sending request': userUtils.get_user_who_send_request(request.user),
+        }
+        return Response(response)
