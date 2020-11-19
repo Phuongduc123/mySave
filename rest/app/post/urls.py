@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import PostPageList, UserPostList, SearchPostListByTitle, SearchPostListByUser, GetPostListByPart
+from .views import PostPageList, UserPostList, SearchPostListByTitle, SearchPostListByUser, GetPostListByPart, VotePost
 from django.views.decorators.cache import cache_page
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^searchpost/$', cache_page(15 * 60)(SearchPostListByTitle.as_view())),
     url(r'^searchpostbyuser/$', cache_page(15 * 60)(SearchPostListByUser.as_view())),
     url(r'^getpostbyamount/$', GetPostListByPart.as_view()),
+    url(r'^voteapost/$', VotePost.as_view()),
 ]

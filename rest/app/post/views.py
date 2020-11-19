@@ -137,13 +137,20 @@ class GetPostListByPart(APIView):
     def post(self, request, format=None):
         """
         request method is POST
-        request body: {"start":"number", "amounts":"number"}
+        request body: {"start":"number", "amounts":"number", "vote": "1", "search":"search"}
         return json post that a user has shared
         """
         result = []
+        posts = Post.objects.all()
         start = int(request.data['start'])
         end = int(request.data['start']) + int(request.data['number'])
-        posts = Post.objects.select_related('file', 'user')[start:end]
+
+        if 'vote' in request.data:    
+            posts = posts.order_by('-vote')
+        if 'search' in request.data:
+            posts = posts.filter(title__contains=request.data['search'])
+        posts = posts[start:end]
+
         for post in posts:
             result.append(postUtils.custom_serializing_post(post))
         response = {
@@ -153,3 +160,18 @@ class GetPostListByPart(APIView):
             'who is sending request': userUtils.get_user_who_send_request(request.user),
         }
         return Response(response)
+
+class VotePost(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+
+    def post(self, request, format=None):
+        """
+        request method is POST
+        request body : {"post": "id post"}
+        """
+        post = Post.objects.get(_id=request.data['post'])
+        post.vote+=1
+        post.save()
+        serializer = PostSerializer(post)
+        return Response(serializer.data)

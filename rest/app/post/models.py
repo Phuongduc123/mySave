@@ -10,6 +10,7 @@ class Post(models.Model):
     file = models.ForeignKey(File, on_delete=models.CASCADE, default=0, related_name='posts',) 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',) 
     timestamp = models.DateTimeField(auto_now_add=True)
+    vote = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.title)
