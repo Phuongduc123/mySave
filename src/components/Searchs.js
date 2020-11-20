@@ -2,7 +2,7 @@ import React from "react";
 import { Input } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
 import "../css/App.css";
-import {searchPost} from "../request/postRequest"
+import {searchPost,searchPostByUser} from "../request/postRequest"
 import actions from "../redux/actions/file/index";
 import {connect} from "react-redux"
 
@@ -12,8 +12,12 @@ const Searchs = (props) => {
 
   const search=(value)=>{
     console.log(value)
-    searchPost(value,props.getSearchFile);
-  }
+    if(props.postType==="postName"){
+      searchPost(value,props.getSearchFile);
+    }else{
+      searchPostByUser(value,props.getSearchFile);
+    }
+}
   return (
     <>
       <Search

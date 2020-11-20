@@ -113,6 +113,30 @@ export const searchPost = async (searchContent, getFileToRedux) => {
     });
 };
 
+export const searchPostByUser = async (searchContent, getFileToRedux) => {
+  await axios
+    .post(
+      "http://127.0.0.1:8000/api/searchpostbyuser/",
+      {
+        search: searchContent,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    .then((response) => {
+      console.log("respone :", response);
+      if (response.status >= 200 && response.status < 300) {
+        getFileToRedux(response.data.data);
+      }
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+};
+
 //getRequest
 export const getUserfile = async (changeAction) => {
   await axios

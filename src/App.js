@@ -17,17 +17,25 @@ import { connect } from "react-redux";
 import actions from "./redux/actions/signin/index";
 import CommunityScreen from "./components/CommunityScreen";
 import { getProfile } from "./request/postRequest";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const App = (props) => {
   const [userName, setUserName] = useState("name");
+  const [postType,setPostType] = useState("postName")
   //send action to redux to signout
   const Signout = () => {
     props.actionLogged("");
   };
 
   useEffect(() => {
-    getProfile(setUserName);  
+    getProfile(setUserName);
   });
+
+  function selectPostType(value) {
+    setPostType(value)
+  }
 
   return (
     <>
@@ -51,9 +59,19 @@ const App = (props) => {
             <li className="left-item">
               <Link to="/my-community">my Community</Link>
             </li>
+            {JSON.parse(localStorage.getItem("logged")) === true?<li style={{float:"left",paddingTop:"9px"}}>
+              <Select
+                defaultValue="postName"
+                style={{ width: 120 }}
+                onChange={selectPostType}
+              >
+                <Option value="postName">Post name</Option>
+                <Option value="userName">User name</Option>
+              </Select>
+            </li>:<></>}
             <li className="left-item">
               <div>
-                <Searchs />
+                <Searchs postType={postType}/>
               </div>
             </li>
             {/* logout and view profile  */}

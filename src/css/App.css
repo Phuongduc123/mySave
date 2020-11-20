@@ -1,6 +1,6 @@
 .nav-bar {
   flex-direction: row;
-  position: relative;;
+  position: relative;
   width: 100%;
   list-style-type: none;
   margin: 0;
@@ -24,6 +24,19 @@
 }
 
 .left-item div{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 0px;
+}
+
+.left-item-select{
+  float: left;
+  flex:1;
+  
+}
+
+.left-item-select div{
   display: block;
   color: white;
   text-align: center;
@@ -80,6 +93,8 @@
   .search{
     visibility: hidden;
   }
+
+
 
 }
 
