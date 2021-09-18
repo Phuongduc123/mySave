@@ -4,3 +4,4 @@ djangorestframework-jwt
 corsheader
 mysqlclient
 django-debug-toolbar
+pillow
